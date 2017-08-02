@@ -24,7 +24,27 @@ public class App {
   }
 
   private static void explore(List<Job> jobs) {
-    // Your amazing code below...
-
+      printPortlandJobsStream(jobs);
   }
+
+    private static void printPortlandJobsStream(List<Job> jobs) {
+    /*
+    The stream below is more efficient than the imperative method. It isn't piling
+    up all the Oregon jobs, and then filtering those to see which of those equal
+    "Portland". Instead, they are both run in a pipeline as a "single fused method".
+     */
+
+        jobs.stream()
+                .filter(job -> job.getState().equals("OR"))
+                .filter(job -> job.getCity().equals("Portland"))
+                .forEach(System.out::println);
+    }
+
+    private static void printPortlandJobsImperatively(List<Job> jobs) {
+        for (Job job : jobs) {
+          if (job.getState().equals("OR") && job.getCity().equals("Portland")) {
+              System.out.println(job);
+          }
+        }
+    }
 }
